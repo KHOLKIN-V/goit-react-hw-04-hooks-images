@@ -36,7 +36,7 @@ export default function App() {
       })
     .catch(({message}) => {
       setError(message);
-      setStatus('rejected');
+      setStatus('rejected'); 
     })
     .finally(() => {
       window.scrollTo({
@@ -73,6 +73,15 @@ export default function App() {
       {(status === 'idle') &&
         <div style={{fontWeight: '500', fontSize: '30px', textAlign: 'center'}}>Введите название</div>
       }
+      {(status === 'rejected') &&
+        <div style={{fontWeight: '700', fontSize: '50px', textAlign: 'center'}}>{error}</div>
+      }
+      {(images.length > 0) && 
+        <>
+          <ImageGallery onSearch={images} openImage={openImage} />
+          <Button onClick={loadMore} page={page} />
+        </>
+      }
       {(status === "pending") && 
         <Loader
           type="Puff"
@@ -81,15 +90,6 @@ export default function App() {
            width={100}
            timeout={3000} //3 secs
         />
-      }
-      {(status === 'rejected') &&
-        <div style={{fontWeight: '700', fontSize: '50px', textAlign: 'center'}}>{error}</div>
-      }
-      {(status === 'resolved') && 
-        <ImageGallery onSearch={images} openImage={openImage} />        
-      }
-      {(status === "resolved") && (images.length > 0) && 
-          <Button onClick={loadMore} page={page} />
       }
       {viewModal && (
         <Modal onClose={toggleModal}>
