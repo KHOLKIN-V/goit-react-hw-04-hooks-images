@@ -21,11 +21,7 @@ export default function App() {
   useEffect(() => {
     setImages([]);
     getImages(searchQuery, page);
-  }, [searchQuery])
-
-  useEffect(() => {
-    getImages(searchQuery, page);
-  }, [page])
+  }, [searchQuery, page])
 
   const getImages = (query, page) => {
     setStatus('pending');
