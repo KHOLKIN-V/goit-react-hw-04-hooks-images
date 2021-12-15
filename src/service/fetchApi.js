@@ -2,10 +2,10 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-const fetchApi = (onSearch, page) => {
+const fetchApi = (searchQuery, page) => {
     const KEY = '23540071-e77d0cd4225c02caa21321106';
     const BASE_URL = 'https://pixabay.com/api/';
-    return axios.get(`${BASE_URL}?q=${onSearch}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`).then(r => r.data.hits);
+    return axios.get(`${BASE_URL}?q=${searchQuery}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`).then(r => r.data.hits);
 };
 
 // const fetchApi = (onSearch, page) => {

@@ -9,17 +9,12 @@ export default function Modal({ onClose, children }) {
   const firstRender = useRef(true);
 
   useEffect(() => {
-    console.log("component did mount");
     window.addEventListener("keydown", handleKeyDown);
-  }, []);
-
-  useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
     }
-    console.log("component will unmount");
-    window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+    return window.removeEventListener("keydown", handleKeyDown);
+  });
 
   const handleKeyDown = (e) => {
     if (e.code === "Escape") {

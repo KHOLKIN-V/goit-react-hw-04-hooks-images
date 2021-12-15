@@ -19,28 +19,29 @@ export default function App() {
   const [modalImage, setModalImage] = useState('');
 
   useEffect(() => {
-    setImages([]);
-    getImages(searchQuery, page);
-  }, [searchQuery, page])
-
-  const getImages = (query, page) => {
-    setStatus('pending');
-    fetchApi(query, page)
-    .then((hits) => {
-        setImages([...images, mapper(hits)]);
-        setStatus('resolved');
-      })
-    .catch(({message}) => {
-      setError(message);
-      setStatus('rejected'); 
-    })
-    .finally(() => {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      });
-    });
-  };
+		const getImages = () => {
+      if (!searchQuery) {
+				return;
+			}
+			setStatus('pending');
+			fetchApi(searchQuery, page)
+				.then((hits) => {
+					setImages((images) => [...images, ...mapper(hits)]);
+					setStatus('resolved');
+				})
+				.catch(({ message }) => {
+					setError(message);
+					setStatus('rejected');
+				})
+				.finally(() => {
+					window.scrollTo({
+						top: document.documentElement.scrollHeight,
+						behavior: 'smooth',
+					});
+				});
+		};
+		getImages();
+	}, [searchQuery, page]);
 
   const loadMore = e => {
     e.preventDefault();
@@ -50,6 +51,7 @@ export default function App() {
   const formSubmit = query => {
     setSearchQuery(query);
     setPage(1);
+    setImages([]);
   }
 
   const toggleModal = () => {
